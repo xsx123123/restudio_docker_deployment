@@ -1,0 +1,16 @@
+services:
+  rstudio:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "50006:8787"
+    environment:
+      PASSWORD: zj109965
+    volumes:
+      # 挂载数据目录
+      - /data/jzhang:/data/jzhang:rw
+      - /home/jzhang:/home/jzhang:rw
+      - /home/jzhang/rstudio/.rstudio_config:/home/rstudio/.config/rstudio
+      - /home/jzhang/rstudio/workspace:/home/rstudio/workspace
+

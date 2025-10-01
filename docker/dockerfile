@@ -1,0 +1,13 @@
+# 1. 基于 rocker/verse:4 镜像
+FROM rocker/verse:4
+
+# 2. 设置环境变量，指定要创建的新用户名
+ENV DEFAULT_USER=jz
+
+# 3. 执行脚本来创建新用户
+#    - 首先检查是否存在 UID 为 1000 的用户，如果存在则删除
+#    - 然后运行 rocker 镜像自带的脚本来创建 new_user
+RUN if grep -q ":1000:" /etc/passwd; then \
+        userdel --remove "$(id -un 1000)"; \
+    fi && \
+    /rocker_scripts/default_user.sh
