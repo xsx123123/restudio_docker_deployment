@@ -1,0 +1,20 @@
+# templates/docker-compose.yml.j2
+services:
+  rstudio:
+    container_name: {{ username }}-rstudio-server
+    image: {{ username }}-rstudio-image:latest
+    build:
+      context: ..
+      dockerfile: docker/{{ dockerfile_name }}
+    ports:
+      - "{{ port }}:8787"
+    environment:
+      PASSWORD: "{{ password }}"
+      USER: "{{ username }}"
+      USERID: "${UID:-1000}"
+      GROUPID: "${GID:-1000}"
+    volumes:
+      - "{{ data_dir }}:/data/{{ username }}:rw"
+      - "{{ home_dir }}:/home/{{ username }}:rw"
+      - "{{ rstudio_config_dir }}:/home/{{ username }}/.config/rstudio:rw"
+      - "{{ workspace_dir }}:/home/{{ username }}/workspace:rw"

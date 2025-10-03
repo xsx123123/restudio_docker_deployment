@@ -1,0 +1,15 @@
+# templates/Dockerfile.j2
+# 1. 基于 rocker/verse 最新稳定版
+FROM rocker/verse:latest
+
+# 2. 设置环境变量，脚本将使用此变量创建用户
+ARG NEW_USER={{ username }}
+ENV USER=${NEW_USER}
+
+# 3. 创建新用户并授予sudo权限
+RUN useradd -m -s /bin/bash -G sudo ${NEW_USER} && \
+    echo "${NEW_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# 4. 切换到新用户
+USER ${NEW_USER}
+WORKDIR /home/${NEW_USER}
