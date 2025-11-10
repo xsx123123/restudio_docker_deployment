@@ -2,6 +2,11 @@
 
 This directory contains scripts to create and run a customized RStudio environment using Docker Compose.
 
+## Documentation
+
+- [English Documentation](README_RStudio_Setup.md)
+- [中文文档](docs/README_RStudio_Setup_CN.md)
+
 ## Files
 
 - `create_rstudio.py`: Main Python script to generate Dockerfile and docker-compose.yml (with colorful help!)
