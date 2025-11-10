@@ -9,8 +9,8 @@ services:
       - "50006:8787"
     environment:
       PASSWORD: zj109965
-      USERID: ${UID}
-      GROUPID: ${GID}
+      USERID: 1006
+      GROUPID: 1001
       HOME: /home/jzhang
     volumes:
       - /data/jzhang:/data/jzhang:rw

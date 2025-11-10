@@ -1,15 +1,13 @@
-# templates/Dockerfile.j2
-# 1. 基于 rocker/verse 最新稳定版
-FROM rocker/verse:latest
+# 1. 使用 rocker 镜像
+FROM rocker/rstudio:4
 
-# 2. 设置环境变量，脚本将使用此变量创建用户
-ARG NEW_USER={{ username }}
-ENV USER=${NEW_USER}
+# 2. 设置环境变量，供 rocker 脚本和系统使用
+ENV DEFAULT_USER={{ user }}
 
-# 3. 创建新用户并授予sudo权限
-RUN useradd -m -s /bin/bash -G sudo ${NEW_USER} && \
-    echo "${NEW_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-# 4. 切换到新用户
-USER ${NEW_USER}
-WORKDIR /home/${NEW_USER}
+# 3. 执行用户创建脚本 (以 root 身份)
+RUN <<EOF
+if grep -q "{{ base_user }}" /etc/passwd; then
+    userdel --remove "$(id -un {{ base_user }})" 2>/dev/null || true
+fi
+/rocker_scripts/default_user.sh
+EOF

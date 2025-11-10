@@ -1,0 +1,16 @@
+services:
+  rstudio:
+    container_name: rstudio-testuser-server
+    image: testuser-rstudio-image:latest
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "50010:8787"
+    environment:
+      PASSWORD: rstudio
+      USERID: 2000
+      GROUPID: 2000
+      HOME: /home/jzhang
+    volumes:
+      - /home/jzhang/rstudio:/home/jzhang/rstudio:rw
